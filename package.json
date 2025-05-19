@@ -1,13 +1,52 @@
 {
   "name": "frontend-toolbox",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.11.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "api:fetch": "bun scripts/fetch-openapi.ts",
+    "api:generate": "rimraf src/api/api-gen && openapi-generator-cli generate && rimraf src/api/api-gen/**/docs",
+    "build": "vite build",
+    "v": "bun -v",
+    "ci": "nr turbo build lint test typecheck",
+    "dev": "vite",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test:prepare": "playwright install",
+    "test": "playwright test",
+    "turbo": "FORCE_COLOR=1 turbo",
+    "typecheck": "tsc --noEmit",
+    "update": "taze -w -l"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.10.0"
+  "dependencies": {
+    "axios": "1.9.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "sonner": "2.0.4"
+  },
+  "devDependencies": {
+    "@antfu/ni": "25.0.0",
+    "@eslint/js": "9.28.0",
+    "@openapitools/openapi-generator-cli": "2.20.2",
+    "@playwright/test": "1.52.0",
+    "@tailwindcss/vite": "4.1.8",
+    "@types/bun": "1.2.15",
+    "@types/node": "22.15.29",
+    "@types/react": "19.1.6",
+    "@types/react-dom": "19.1.5",
+    "@vitejs/plugin-react": "4.5.0",
+    "bun": "1.2.15",
+    "eslint": "9.28.0",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "globals": "16.2.0",
+    "rimraf": "6.0.1",
+    "tailwindcss": "4.1.8",
+    "taze": "19.1.0",
+    "turbo": "2.5.4",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.33.0",
+    "vite": "6.3.5"
+  }
 }

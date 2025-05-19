@@ -1,0 +1,78 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "api:fetch": {
+      "inputs": [
+        "scripts/fetch-openapi.ts"
+      ],
+      "outputs": [
+        "api"
+      ],
+      "cache": false
+    },
+    "api:generate": {
+      "dependsOn": [
+        "api:fetch"
+      ],
+      "inputs": [
+        "api",
+        "openapitools.json"
+      ],
+      "outputs": [
+        "src/api/api-gen/**"
+      ]
+    },
+    "dev": {
+      "dependsOn": [
+        "api:generate"
+      ],
+      "cache": false,
+      "persistent": true
+    },
+    "typecheck": {
+      "dependsOn": [
+        "api:generate"
+      ]
+    },
+    "lint": {
+      "dependsOn": [
+        "api:generate"
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "api:generate"
+      ],
+      "outputs": [
+        "dist"
+      ]
+    },
+    "preview": {
+      "dependsOn": [
+        "build"
+      ],
+      "cache": false,
+      "persistent": true
+    },
+    "test:prepare": {
+      "inputs": [
+        "playwright.config.ts"
+      ],
+      "cache": false
+    },
+    "test": {
+      "dependsOn": [
+        "build",
+        "test:prepare"
+      ],
+      "inputs": [
+        "playwright.config.ts",
+        "tests"
+      ],
+      "outputs": [
+        "playwright-report",
+        "test-results"
+      ]
+    }
+  }
+}
